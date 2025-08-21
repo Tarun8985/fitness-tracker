@@ -8,6 +8,11 @@
   <!-- Chart.js CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
 
 
   <!-- Stylesheet -->
@@ -43,8 +48,13 @@
         
         <div class="search-placeholder" aria-label="Search or filter options"></div>
         <div class="topbar-right">
-          <button id="themeToggle" aria-label="Toggle theme" title="Toggle Light/Dark Mode"><i class="fa-solid fa-sun"></i>
-</button>
+         <label class="toggle">
+  <input type="checkbox" id="themeToggle" aria-label="Toggle theme" />
+  <span class="slider">
+    <i class="lni lni-sun"></i>
+    <i class="lni lni-night"></i>
+  </span>
+</label>
           <button class="notifications-btn" aria-label="View Notifications" title="Notifications">
             <i class="fa-solid fa-bell"></i><span id="notifBadge" class="notif-badge" hidden>0</span>
           </button>

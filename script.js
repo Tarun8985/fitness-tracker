@@ -4,7 +4,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const app = document.getElementById('app');
+  
 
   // Sidebar navigation
   const navItems = document.querySelectorAll('.nav-item');
@@ -39,27 +39,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /*** THEME TOGGLE ***/
-  const themeToggle = document.getElementById('themeToggle');
-  let currentTheme = localStorage.getItem('theme') || 'light';
+  const themeToggleCheckbox = document.getElementById('themeToggle');
+  const app = document.getElementById('app');
 
-  function applyTheme(theme) {
-    if (theme === 'dark') {
-      app.classList.add('dark-theme');
-      app.classList.remove('light-theme');
-      themeToggle.textContent = '🌜';
-    } else {
-      app.classList.add('light-theme');
-      app.classList.remove('dark-theme');
-      themeToggle.textContent ='☀️';
-    }
+themeToggleCheckbox.checked = localStorage.getItem('theme') === 'dark';
+applyTheme(themeToggleCheckbox.checked ? 'dark' : 'light');
+
+themeToggleCheckbox.addEventListener('change', () => {
+  const theme = themeToggleCheckbox.checked ? 'dark' : 'light';
+  applyTheme(theme);
+  localStorage.setItem('theme', theme);
+});
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    app.classList.add('dark-theme');
+    app.classList.remove('light-theme');
+  } else {
+    app.classList.add('light-theme');
+    app.classList.remove('dark-theme');
   }
-  applyTheme(currentTheme);
-
-  themeToggle.addEventListener('click', () => {
-    currentTheme = currentTheme === 'light' ? 'dark' : 'light';
-    applyTheme(currentTheme);
-    localStorage.setItem('theme', currentTheme);
-  });
+}
 
   /*** STATS & PROGRESS CARDS ***/
 
@@ -337,10 +337,10 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <h4>${meal.name}</h4>
         <div class="meal-stats">
-          <span>🔥 ${meal.calories} kcal</span>
-          <span>💪 ${meal.protein} g Protein</span>
-          <span>🍞 ${meal.carbs} g Carbs</span>
-          <span>🥑 ${meal.fats} g Fats</span>
+          <span> ${meal.calories} kcal</span>
+          <span> ${meal.protein} g Protein</span>
+          <span> ${meal.carbs} g Carbs</span>
+          <span> ${meal.fats} g Fats</span>
         </div>
         <button class="remove-btn" aria-label="Remove meal ${meal.name}">&times;</button>
       `;
@@ -471,19 +471,19 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: 1,
       name: '10k Steps',
-      icon: '🥾',
+      icon: '<i class="fas fa-walking"></i>',
       condition: () => statsData.find((s) => s.id === 'steps').value >= 10000,
     },
     {
       id: 2,
       name: '500 Calories Burned',
-      icon: '🔥',
+      icon: '<i class="fas fa-fire"></i>',
       condition: () => statsData.find((s) => s.id === 'calories').value >= 500,
     },
     {
       id: 3,
       name: 'Active 60+ Min',
-      icon: '⏱️',
+      icon: '<i class="fas fa-stopwatch"></i>',
       condition: () => statsData.find((s) => s.id === 'activeMinutes').value >= 60,
     },
   ];
@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const badge = document.createElement('div');
       badge.className = 'badge';
       badge.setAttribute('aria-label', `Achievement: ${ach.name}`);
-      badge.textContent = ach.icon;
+      badge.innerHTML = ach.icon;
       achievementBadgesContainer.appendChild(badge);
 
       // Show notification only if condition is met and first time
