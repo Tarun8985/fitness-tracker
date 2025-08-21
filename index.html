@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fitness Tracker Dashboard</title>
+  
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app" class="light-theme">
+    <!-- Sidebar -->
+    <nav class="sidebar" aria-label="Primary Navigation">
+      <div class="sidebar-header">
+        <h2>FitTrack</h2>
+      </div>
+      <ul class="nav-list">
+        <li class="nav-item active" data-section="dashboard" tabindex="0" aria-current="page">
+          <span class="icon"></span> Dashboard
+        </li>
+        <li class="nav-item" data-section="workouts" tabindex="0">
+          <span class="icon"></span> Workouts
+        </li>
+        <li class="nav-item" data-section="nutrition" tabindex="0">
+          <span class="icon"></span> Nutrition
+        </li>
+        <li class="nav-item" data-section="progress" tabindex="0">
+          <span class="icon"></span> Progress
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <!-- Topbar -->
+      <header class="topbar">
+        
+        <div class="search-placeholder" aria-label="Search or filter options"></div>
+        <div class="topbar-right">
+          <button id="themeToggle" aria-label="Toggle theme" title="Toggle Light/Dark Mode"><i class="fa-solid fa-sun"></i>
+</button>
+          <button class="notifications-btn" aria-label="View Notifications" title="Notifications">
+            <i class="fa-solid fa-bell"></i><span id="notifBadge" class="notif-badge" hidden>0</span>
+          </button>
+          <div class="profile" tabindex="0" aria-label="User Profile">
+            <img src="https://i.pravatar.cc/40" alt="User Avatar" />
+            <span>Tarun S</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Sections -->
+      <section id="dashboard" class="dashboard-section active" aria-label="Dashboard Overview">
+        <!-- Draggable Dashboard Cards Container -->
+        <div id="dashboardCards" class="dashboard-cards" aria-live="polite">
+          <!-- Cards injected by JS -->
+        </div>
+
+        <!-- Daily Activity Timeline -->
+        <section class="daily-activity">
+          <h3>Daily Activity Timeline</h3>
+          <ul id="activityTimeline" class="timeline-list" aria-live="polite" aria-relevant="additions">
+            <!-- Activity items injected by JS -->
+          </ul>
+        </section>
+
+        <!-- Calendar View -->
+        <section class="calendar-section" aria-label="Calendar View">
+          <h3>Workout & Nutrition Calendar</h3>
+          <div class="calendar-nav" aria-label="Calendar navigation">
+            <button id="prevMonthBtn" aria-label="Previous Month">&lt;</button>
+            <span id="calendarMonthYear" aria-live="polite"></span>
+            <button id="nextMonthBtn" aria-label="Next Month">&gt;</button>
+          </div>
+          <div id="calendar"></div>
+        </section>
+      </section>
+
+      <section id="workouts" class="dashboard-section" aria-label="Workout List and Filters" hidden>
+        <h2>Workouts</h2>
+        <div class="workout-filters" role="group" aria-label="Workout Filters">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="cardio">Cardio</button>
+          <button class="filter-btn" data-filter="strength">Strength</button>
+          <button class="filter-btn" data-filter="flexibility">Flexibility</button>
+        </div>
+
+        <ul id="workoutList" class="workout-list" aria-live="polite">
+          <!-- Workout list items via JS -->
+        </ul>
+
+        <form id="workoutForm" aria-label="Add a workout">
+          <input type="text" id="newWorkoutName" placeholder="Workout name" required />
+          <select id="newWorkoutType" aria-label="Select workout type" required>
+            <option value="" disabled selected>Type</option>
+            <option value="cardio">Cardio</option>
+            <option value="strength">Strength</option>
+            <option value="flexibility">Flexibility</option>
+          </select>
+          <button type="submit">Add Workout</button>
+        </form>
+      </section>
+
+      <section id="nutrition" class="dashboard-section" aria-label="Nutrition Tracker" hidden>
+        <h2>Nutrition Tracker</h2>
+        <div id="mealCards" class="meal-cards" aria-live="polite">
+          <!-- Meal cards by JS -->
+        </div>
+
+        <form id="nutritionForm" aria-label="Add a meal">
+          <input type="text" id="mealName" placeholder="Meal name" required />
+          <input type="number" id="calories" placeholder="Calories" min="0" required />
+          <input type="number" id="protein" placeholder="Protein (g)" min="0" required />
+          <input type="number" id="carbs" placeholder="Carbs (g)" min="0" required />
+          <input type="number" id="fats" placeholder="Fats (g)" min="0" required />
+          <button type="submit">Add Meal</button>
+        </form>
+      </section>
+
+      <section id="progress" class="dashboard-section" aria-label="Progress and Achievements" hidden>
+        <h2>Progress</h2>
+
+        <!-- Charts -->
+        <div class="charts-container">
+          <canvas id="weeklyChart" aria-label="Weekly activity chart" role="img"></canvas>
+          <canvas id="monthlyChart" aria-label="Monthly activity chart" role="img"></canvas>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements">
+          <h3>Your Achievements</h3>
+          <div id="achievementBadges" class="badges-container" aria-live="polite">
+            <!-- Badges dynamically shown -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Notifications Container -->
+    <div id="notifications-container" aria-live="assertive" aria-atomic="true"></div>
+  </div>
+
+  <!-- JavaScript -->
+   <script src="https://kit.fontawesome.com/b0e16352c8.js" crossorigin="anonymous"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>

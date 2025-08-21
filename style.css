@@ -1,0 +1,753 @@
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body, html {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  height: 100%;
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+img {
+  border-radius: 50%;
+  display: block;
+}
+
+/* Theme Variables */
+
+#app.light-theme {
+  --bg: #f9f9f9;
+  --card-bg: #ffffff;
+  --primary: #4caf50;
+  --primary-dark: #388e3c;
+  --text: #111111;
+  --text-muted: #555555;
+  --border: #ddd;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --notif-bg: #4caf50;
+  --error-bg: #e74c3c;
+}
+
+#app.dark-theme {
+    color:white;
+  --bg: #121212;
+  
+  --card-bg: #1e1e1e;
+  --card-color: white;
+  --primary: #81c784;
+  --primary-dark: #4caf50;
+  --text: #efefef;
+  --text-muted: #bbbbbb;
+  --border: #333333;
+  --shadow: rgba(0,0,0,0.5);
+  --notif-bg: #81c784;
+  --error-bg: #c0392b;
+}
+
+/* Layout */
+
+#app {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  background-color: var(--card-bg);
+  width: 240px;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  flex-shrink: 0;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--primary);
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.nav-item {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  transition: background-color 0.2s ease;
+  gap: 0.75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  outline-offset: 2px;
+}
+
+.nav-item:hover,
+.nav-item:focus {
+  background-color: var(--primary);
+  color: white;
+  outline: none;
+}
+
+.nav-item.active {
+  background-color: var(--primary-dark);
+  color: white;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  background: var(--bg);
+  padding: 1rem 1.5rem;
+  scroll-behavior: smooth;
+}
+
+.topbar {
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.topbar button {
+  font-size: 1.25rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 0.25rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.topbar button:hover,
+.topbar button:focus {
+  background-color: var(--primary);
+  color: white;
+  outline: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  color: var(--text-muted);
+  user-select: none;
+  font-weight: 600;
+}
+
+.profile:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Sections */
+
+.dashboard-section {
+  flex-grow: 1;
+}
+
+.dashboard-section:not(.active) {
+  display: none;
+}
+
+/* Dashboard Cards Container & Draggable cards */
+
+.dashboard-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px var(--shadow);
+  flex: 1 1 200px;
+  min-width: 180px;
+  user-select: none;
+  cursor: grab;
+  transition: box-shadow 0.2s ease;
+}
+
+.card.dragging {
+  opacity: 0.7;
+  cursor: grabbing;
+  box-shadow: 0 10px 20px var(--shadow);
+}
+
+.card h4 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+}
+
+.card .number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.progress-bar-bg {
+  background-color: var(--border);
+  border-radius: 10px;
+  height: 10px;
+  margin-top: 0.5rem;
+}
+
+.progress-bar-fill {
+  background-color: var(--primary);
+  height: 10px;
+  border-radius: 10px;
+  width: 0;
+  transition: width 1s ease;
+}
+
+/* Daily Activity Timeline */
+
+.daily-activity {
+  margin-bottom: 2rem;
+}
+
+.daily-activity h3 {
+  margin-bottom: 0.75rem;
+}
+
+.timeline-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.timeline-list li {
+  background-color: var(--card-bg);
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px var(--shadow);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* Calendar */
+
+.calendar-section {
+  margin-bottom: 2rem;
+}
+
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.calendar-nav button {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.calendar-nav button:hover,
+.calendar-nav button:focus {
+  background-color: var(--primary-dark);
+  outline: none;
+}
+
+.calendar-nav span {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+#calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 1px 6px var(--shadow);
+}
+
+.calendar-day {
+  background-color: var(--bg);
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0.5rem 0;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.calendar-day.today {
+  border: 2px solid var(--primary);
+}
+
+.calendar-day.has-activity::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background-color: var(--primary);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+}
+
+.calendar-day.empty {
+  background: transparent !important;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Workouts Section */
+
+.workout-filters {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  background: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.filter-btn.active,
+.filter-btn:hover,
+.filter-btn:focus {
+  background-color: var(--primary);
+  color: white;
+  outline: none;
+}
+
+.workout-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+
+.workout-item {
+  background-color: var(--card-bg);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px var(--shadow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.workout-item .type {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 1rem;
+  font-style: italic;
+}
+
+.workout-item button {
+  background: var(--error-bg);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+  transition: background-color 0.3s ease;
+}
+
+.workout-item button:hover,
+.workout-item button:focus {
+  background: #c0392b;
+  outline: none;
+}
+
+/* Workout Form */
+
+#workoutForm {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+#workoutForm input,
+#workoutForm select {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 1rem;
+  flex-grow: 1;
+  min-width: 120px;
+  background-color: var(--card-bg);
+  color: var(--text);
+  transition: border-color 0.3s ease;
+}
+
+#workoutForm input:focus,
+#workoutForm select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+#workoutForm button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+#workoutForm button:hover,
+#workoutForm button:focus {
+  background-color: var(--primary-dark);
+  outline: none;
+}
+
+/* Nutrition Tracker */
+
+.meal-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.meal-card {
+  background-color: var(--card-bg);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px var(--shadow);
+  flex: 1 1 220px;
+  min-width: 200px;
+  position: relative;
+  user-select: none;
+}
+
+.meal-card h4 {
+  margin: 0 0 0.4rem 0;
+  font-weight: 700;
+}
+
+.meal-stats {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.meal-stats span {
+  margin-right: 0.75rem;
+  font-weight: 600;
+}
+
+.meal-card .remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: var(--error-bg);
+  border: none;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background-color 0.3s ease;
+}
+
+.meal-card .remove-btn:hover,
+.meal-card .remove-btn:focus {
+  background: #c0392b;
+  outline: none;
+}
+
+/* Nutrition Form */
+
+#nutritionForm {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+#nutritionForm input {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: var(--card-bg);
+  color: var(--text);
+  transition: border-color 0.3s ease;
+  flex-grow: 1;
+  min-width: 100px;
+}
+
+#nutritionForm input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+#nutritionForm button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+}
+
+#nutritionForm button:hover,
+#nutritionForm button:focus {
+  background-color: var(--primary-dark);
+  outline: none;
+}
+
+/* Progress Charts Container */
+
+.charts-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.charts-container canvas {
+  background-color: var(--card-bg);
+  border-radius: 10px;
+  box-shadow: 0 1px 6px var(--shadow);
+  flex: 1 1 320px;
+  max-width: 100%;
+  height: 250px !important;
+}
+
+/* Achievements Badges */
+
+.achievements h3 {
+  margin-bottom: 1rem;
+}
+
+.badges-container {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem;
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 8px var(--shadow);
+  user-select: none;
+  animation: badge-pop 0.5s ease forwards;
+}
+
+@keyframes badge-pop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Notifications */
+
+#notifications-container {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 9999;
+}
+
+.notification {
+  background-color: var(--notif-bg);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px var(--shadow);
+  font-weight: 700;
+  user-select: none;
+  opacity: 0;
+  animation: slide-in 0.4s forwards;
+}
+
+@keyframes slide-in {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+/* Stats cards animations */
+
+.number.animate-number {
+  animation-name: number-grow;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes number-grow {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 60px;
+  }
+
+  .sidebar-header h2 {
+    font-size: 1rem;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-indent: -9999px;
+  }
+
+  .nav-item {
+    justify-content: center;
+  }
+
+  .nav-item span.icon {
+    font-size: 1.25rem;
+  }
+
+  .nav-item:not(.active):hover,
+  .nav-item:not(.active):focus {
+    background-color: transparent;
+    color: var(--primary);
+  }
+}
+
+@media (max-width: 768px) {
+  #app {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex-direction: row;
+    align-items: center;
+  }
+  .nav-list {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+  }
+  .nav-item {
+    padding: 0.5rem;
+    font-size: 0.825rem;
+  }
+
+  .main-content {
+    padding: 1rem;
+  }
+
+  .dashboard-cards,
+  .meal-cards {
+    justify-content: center;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .charts-container {
+    flex-direction: column;
+  }
+
+  #workoutForm input,
+  #workoutForm select,
+  #nutritionForm input {
+    flex-grow: 1;
+    min-width: 0;
+    font-size: 0.9rem;
+  }
+}
